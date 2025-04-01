@@ -1,0 +1,17 @@
+with tab1 as (
+SELECT 
+  CONCAT_WS(' ', 
+    NULLIF(first_name, ''), 
+    NULLIF(middle_initial, ''), 
+    NULLIF(last_name, ''), 
+    NULLIF(age::TEXT, '')
+  ) AS name_ffu
+FROM customers
+)
+SELECT COUNT(DISTINCT name_ffu) AS customers_count
+FROM tab1;
+
+первый запрос обьединяет четыре столбца (first_name, middle_initial,last_name, age), игнорируя значения NULL, 
+при этом меняет тип данных на текст у последнего столбца, тем самым создаю уникальную комбинация для каждого клиента, затем 
+во втором запросе считаю количество уникальных строк.
+    
